@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "esModuleInterop": true,
     "jsx": "preserve",
     "forceConsistentCasingInFileNames": true,
@@ -19,7 +19,6 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "dist/",
-    "paths": {},
     "preserveConstEnums": true,
     "pretty": true,
     "resolveJsonModule": true,
@@ -30,7 +29,7 @@
     "types": []
   },
   "files": [
-    "src/index.ts"
+    "src/index.tsx"
   ],
   "include": [
     "src"
