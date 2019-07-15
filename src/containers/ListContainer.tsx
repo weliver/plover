@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as MyTypes from "MyTypes";
-import { actionTypes } from "../actions";
+import * as ListTypes from "ListTypes";
+import { listActionTypes } from "../actions";
 import { ListItem } from "../components";
 
 interface ListContainerState {
@@ -57,19 +57,25 @@ class ListContainer extends React.Component<ListContainerProps, ListContainerSta
 
     return (
       <div>
-        {listJSX}
-        <input
-          onChange={this.handleTextChange}
-          placeholder={"New Item Here"}
-          value={this.state.listInput}
-        />
-        <button onClick={this.handleButtonClick}>Add List Item</button>
+        <div>
+          <input
+            onChange={this.handleTextChange}
+            placeholder={"New Item Here"}
+            value={this.state.listInput}
+          />
+          <button onClick={this.handleButtonClick}>Add List Item</button>
+        </div>
+        <div>
+          <ul>
+            {listJSX}
+          </ul>
+        </div>
       </div>
     );
   }
 }
 
-const MapStateToProps = (store: MyTypes.RootState) => {
+const MapStateToProps = (store: ListTypes.RootState) => {
   return {
     count: store.list.count,
     itemList: store.list.list
@@ -77,9 +83,9 @@ const MapStateToProps = (store: MyTypes.RootState) => {
 };
 
 // @todo misnamed property values does not get picked up by intellisense.
-const MapDispatchToProps = (dispatch: Dispatch<MyTypes.RootAction>) => ({
-  addListItem: (item: string) => dispatch({ type: actionTypes.ADD, payload: item }),
-  deleteListItem: (idx: number) => dispatch({ type: actionTypes.DELETE, payload: idx })
+const MapDispatchToProps = (dispatch: Dispatch<ListTypes.RootAction>) => ({
+  addListItem: (item: string) => dispatch({ type: listActionTypes.ADD, payload: item }),
+  deleteListItem: (idx: number) => dispatch({ type: listActionTypes.DELETE, payload: idx })
 });
 
 export default connect(

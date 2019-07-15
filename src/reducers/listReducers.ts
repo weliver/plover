@@ -1,5 +1,5 @@
-import * as MyTypes from "MyTypes";
-import { actionTypes } from "../actions";
+import * as ListTypes from "ListTypes";
+import { listActionTypes } from "../actions";
 
 interface IListModel {
   count: number;
@@ -11,16 +11,16 @@ export const initialState: IListModel = {
   list: ["Do the laundry", "Do the dishes"]
 };
 
-export const listReducer = (state: IListModel = initialState, action: MyTypes.RootAction) => {
+export const listReducer = (state: IListModel = initialState, action: ListTypes.RootAction) => {
   switch (action.type) {
-    case actionTypes.ADD: {
+    case listActionTypes.ADD: {
       return {
         ...state,
         count: state.count + 1,
         list: [...state.list, action.payload]
       };
     }
-    case actionTypes.DELETE: {
+    case listActionTypes.DELETE: {
       const oldList = [...state.list];
       oldList.splice(action.payload, 1);
       const newList = oldList;

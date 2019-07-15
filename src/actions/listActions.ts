@@ -1,12 +1,12 @@
 import { action } from "typesafe-actions";
 
 // use typescript enum rather than action constants
-export enum actionTypes {
+export enum listActionTypes {
   ADD = "ADD",
   DELETE = "DELETE"
-}
+};
 
 export const listActions = {
-  add: (item: string) => action(actionTypes.ADD, item),
-  delete: (idx: number) => action(actionTypes.DELETE, idx)
+  add: (item: string) => action(listActionTypes.ADD, item),
+  delete: (idx: number) => action(listActionTypes.DELETE, idx)
 };

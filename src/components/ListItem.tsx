@@ -8,9 +8,9 @@ interface ListItemProps {
 
 export const ListItem: React.FC<ListItemProps> = props => {
   return (
-    <span>
+    <li>
       {props.item}
       <button onClick={() => props.handleDelete(props.idx)}>Delete</button>
-    </span>
+    </li>
   );
 };

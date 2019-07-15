@@ -4,7 +4,7 @@ import ListContainer from "./containers/ListContainer";
 const App: React.FC = () => {
   return (
     <>
-      <h1>React, Redux, TypeScript</h1>
+      <h1>List:</h1>
       <ListContainer />
     </>
   );
