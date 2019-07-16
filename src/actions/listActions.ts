@@ -10,7 +10,7 @@ const ADD = "list/ADD";
 const DELETE = "list/DELETE";
 
 export const add = createStandardAction(ADD).map(
-  (payload: { item: string, idx: number }) => ({
+  (payload: { item: string }) => ({
       payload: {
         ...payload
       } as ListItem

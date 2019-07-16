@@ -1,15 +1,16 @@
 import { ActionType, getType } from "typesafe-actions";
 
 import * as listActions from "../actions/listActions";
+import {ListItem} from "../models/listItem";
 
 interface IListModel {
   count: number;
-  list: string[];
+  list: ListItem[];
 }
 
 export const initialState: IListModel = {
   count: 2,
-  list: ["Do the laundry", "Do the dishes"]
+  list: [{item: "Do the laundry"}, {item: "Do the dishes"}]
 };
 
 export type ListAction = ActionType<typeof listActions>
@@ -24,7 +25,7 @@ export const listReducer = (state: IListModel = initialState, action: ListAction
     }
     case getType(listActions.remove): {
       const oldList = [...state.list];
-      oldList.splice(action.payload, 1);
+      oldList.splice(action.payload.idx, 1);
       const newList = oldList;
       return {
         ...state,

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import * as ListTypes from "ListTypes";
+import { ListItem as ListItemModel } from "../models/listItem";
 import { ListItem } from "../components";
 
 interface ListContainerState {
@@ -10,8 +10,8 @@ interface ListContainerState {
 
 interface ListContainerProps {
   count: number;
-  itemList: string[];
-  addListItem: (item: string) => object;
+  itemList: ListItemModel[];
+  addListItem: (item: ListItemModel) => object;
   deleteListItem: (idx: number) => object;
 }
 
@@ -29,7 +29,7 @@ class ListContainer extends React.Component<ListContainerProps, ListContainerSta
     } else {
       listJSX = this.props.itemList.map((item, idx) => {
         return (
-          <ListItem item={item} key={idx} idx={idx} handleDelete={this.handleDeleteButtonClick} />
+          <ListItem item={item.item} key={idx} idx={idx} handleDelete={this.handleDeleteButtonClick} />
         );
       });
     }
@@ -60,7 +60,7 @@ class ListContainer extends React.Component<ListContainerProps, ListContainerSta
   };
 
   handleButtonClick = () => {
-    this.props.addListItem(this.state.listInput);
+    this.props.addListItem({ item: this.state.listInput });
     this.setState({
       listInput: ""
     });
@@ -78,11 +78,12 @@ const MapStateToProps = (store: ListTypes.RootState) => {
   };
 };
 
-// @todo misnamed property values does not get picked up by intellisense.
-const MapDispatchToProps = (dispatch: Dispatch<ListTypes.RootAction>) => ({
-    addListItem: (item: ListItem) => dispatch({ type: "list/ADD", payload: item ),
-    deleteListItem: (idx: number) => dispatch({ type: "list/DELETE", payload: idx })
-  });
+function addListItem(item: ListItemModel) { return { type: "list/ADD", payload: item } };
+function deleteListItem(idx: number) { return { type: "list/DELETE", payload: idx}};
+const MapDispatchToProps = {
+  addListItem,
+  deleteListItem
+};
 
 export default connect(
   MapStateToProps,
