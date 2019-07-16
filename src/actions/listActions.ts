@@ -1,12 +1,25 @@
-import { action } from "typesafe-actions";
-
+import { createStandardAction } from "typesafe-actions";
+import { ListItem } from "../models/listItem"
 // use typescript enum rather than action constants
-export enum listActionTypes {
-  ADD = "ADD",
-  DELETE = "DELETE"
-};
+// export enum listActionTypes {
+//   ADD = "ADD",
+//   DELETE = "DELETE"
+// };
 
-export const listActions = {
-  add: (item: string) => action(listActionTypes.ADD, item),
-  delete: (idx: number) => action(listActionTypes.DELETE, idx)
-};
+const ADD = "list/ADD";
+const DELETE = "list/DELETE";
+
+export const add = createStandardAction(ADD).map(
+  (payload: { item: string, idx: number }) => ({
+      payload: {
+        ...payload
+      } as ListItem
+    })
+);
+export const remove = createStandardAction(DELETE)<{ idx: number }>();
+
+
+// export const listActions = {
+//   add: (item: string) => action(listActionTypes.ADD, item),
+//   delete: (idx: number) => action(listActionTypes.DELETE, idx)
+// };

@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import * as ListTypes from "ListTypes";
-import { listActionTypes } from "../actions";
 import { ListItem } from "../components";
 
 interface ListContainerState {
@@ -16,32 +15,12 @@ interface ListContainerProps {
   deleteListItem: (idx: number) => object;
 }
 
+const initialState = { listInput: "" }
+type State = Readonly<typeof initialState>
+
 class ListContainer extends React.Component<ListContainerProps, ListContainerState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      listInput: ""
-    }
-  }
 
-  handleTextChange = (e: any) => {
-    this.setState({
-      listInput: e.target.value
-    });
-  };
-
-  handleButtonClick = () => {
-    this.props.addListItem(this.state.listInput);
-    this.setState({
-      listInput: ""
-    });
-  };
-
-  handleDeleteButtonClick = (idx: number) => {
-    console.log("deleting", idx);
-    this.props.deleteListItem(idx);
-  };
-
+  state: State = initialState
 
   render() {
     let listJSX: JSX.Element[] | JSX.Element;
@@ -73,6 +52,23 @@ class ListContainer extends React.Component<ListContainerProps, ListContainerSta
       </div>
     );
   }
+
+  handleTextChange = (e: any) => {
+    this.setState({
+      listInput: e.target.value
+    });
+  };
+
+  handleButtonClick = () => {
+    this.props.addListItem(this.state.listInput);
+    this.setState({
+      listInput: ""
+    });
+  };
+
+  handleDeleteButtonClick = (idx: number) => {
+    this.props.deleteListItem(idx);
+  };
 }
 
 const MapStateToProps = (store: ListTypes.RootState) => {
@@ -84,9 +80,9 @@ const MapStateToProps = (store: ListTypes.RootState) => {
 
 // @todo misnamed property values does not get picked up by intellisense.
 const MapDispatchToProps = (dispatch: Dispatch<ListTypes.RootAction>) => ({
-  addListItem: (item: string) => dispatch({ type: listActionTypes.ADD, payload: item }),
-  deleteListItem: (idx: number) => dispatch({ type: listActionTypes.DELETE, payload: idx })
-});
+    addListItem: (item: ListItem) => dispatch({ type: "list/ADD", payload: item ),
+    deleteListItem: (idx: number) => dispatch({ type: "list/DELETE", payload: idx })
+  });
 
 export default connect(
   MapStateToProps,

@@ -1,5 +1,6 @@
-import * as ListTypes from "ListTypes";
-import { listActionTypes } from "../actions";
+import { ActionType, getType } from "typesafe-actions";
+
+import * as listActions from "../actions/listActions";
 
 interface IListModel {
   count: number;
@@ -11,27 +12,48 @@ export const initialState: IListModel = {
   list: ["Do the laundry", "Do the dishes"]
 };
 
-export const listReducer = (state: IListModel = initialState, action: ListTypes.RootAction) => {
+export type ListAction = ActionType<typeof listActions>
+export const listReducer = (state: IListModel = initialState, action: ListAction) => {
   switch (action.type) {
-    case listActionTypes.ADD: {
+    case getType(listActions.add): {
       return {
         ...state,
         count: state.count + 1,
         list: [...state.list, action.payload]
       };
     }
-    case listActionTypes.DELETE: {
+    case getType(listActions.remove): {
       const oldList = [...state.list];
       oldList.splice(action.payload, 1);
       const newList = oldList;
-
       return {
         ...state,
         count: state.count - 1,
         list: newList
-      };
+      }
     }
     default:
       return state;
   }
 };
+  //   case listActionTypes.ADD: {
+  //     return {
+  //       ...state,
+  //       count: state.count + 1,
+  //       list: [...state.list, action.payload]
+  //     };
+  //   }
+  //   case listActionTypes.DELETE: {
+  //     const oldList = [...state.list];
+  //     oldList.splice(action.payload, 1);
+  //     const newList = oldList;
+  //
+  //     return {
+  //       ...state,
+  //       count: state.count - 1,
+  //       list: newList
+  //     };
+  //   }
+  //   default:
+  //     return state;
+  // }

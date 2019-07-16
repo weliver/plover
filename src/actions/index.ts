@@ -1,1 +1,5 @@
-export * from "./listActions";
+import * as listActions from "./listActions";
+
+export default {
+  listActions
+}
